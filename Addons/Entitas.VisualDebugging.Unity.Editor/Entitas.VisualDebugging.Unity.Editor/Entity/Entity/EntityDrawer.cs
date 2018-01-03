@@ -163,6 +163,20 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                         if (EditorLayout.MiniButton("-")) {
                             entity.RemoveComponent(index);
                         }
+						if(GUILayout.Button(">", GUILayout.Width(19), GUILayout.Height(14))) {
+							var assets = AssetDatabase.FindAssets ("t:Script " + componentType.Name);
+
+							foreach (var asset in assets) {
+								var assetPath = AssetDatabase.GUIDToAssetPath (asset);
+
+								if (assetPath.Contains (componentType.Name + ".cs")) {
+									var assetObject = AssetDatabase.LoadAssetAtPath<UnityEngine.Object> (assetPath);
+									// Selection.activeObject = assetObject;
+									EditorGUIUtility.PingObject(assetObject);
+									break;
+								}
+							}
+						}
                     }
                     EditorGUILayout.EndHorizontal();
 
